@@ -3,17 +3,17 @@ FROM php:apache
 MAINTAINER Robert Schneider <shakemedev@gmail.com>
 
 # remove SUID flag
-RUN for i in `find / -perm +6000 -type f`; do chmod a-s $i; done
+RUN for i in `find / -perm /6000 -type f`; do chmod a-s $i; done
 
 # install dependencies
 RUN apt-get update \
     && apt-get install --assume-yes \
-        libmemcache-dev \
+        libmemcached-dev \
         libpq-dev \
         zlib1g-dev
 
 # install and enable extensions
-RUN docker-php-ext-install \
+RUN docker-php-ext-install -j$(nproc) \
         mysqli \
         pdo \
         pdo_mysql \
@@ -24,7 +24,7 @@ RUN docker-php-ext-install \
         pdo_mysql \
         pdo_pgsql
 
-RUN pecl install \
+RUN echo "" | pecl install \
         memcached \
         redis \
     && docker-php-ext-enable \
