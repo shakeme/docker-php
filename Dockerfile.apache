@@ -34,5 +34,5 @@ RUN echo "" | pecl install \
 # cleanup
 RUN apt-get --assume-yes autoremove \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
